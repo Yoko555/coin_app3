@@ -4,8 +4,7 @@
 
 import os
 
-from yolox.exp import Exp as MyExp
-
+from yolox_base import Exp as MyExp
 
 class Exp(MyExp):
     def __init__(self):
