@@ -64,16 +64,17 @@ def predicts():
             #　HTML 側の src の記述に合わせるために付帯情報付与する
             base64_data = 'data:image/png;base64,{}'.format(base64_str)
                         
-#            parser = argparse.ArgumentParser("YOLOX Demo!")
-#            parser.add_argument("demo", default="image", help="demo type, eg. image, video and webcam")
-#            parser.add_argument("-f", "--exp_file", default=config_path, type=str, help="please input your experiment description file")
-#            parser.add_argument("-c", "--ckpt", default="./src/best_ckpt.pth", type=str, help="ckpt for eval")
-#            parser.add_argument("--device", default="cpu", type=str, help="device to run our model, can either be cpu or gpu")
-#            parser.add_argument("--path", default=temp_file_input_path, help="path to images or video")
-#            parser.add_argument("--save_result", action="store_true", help="whether to save the inference result of image/video")
+            parser = argparse.ArgumentParser("YOLOX Demo!")
+            parser.add_argument("demo", default="image", help="demo type, eg. image, video and webcam")
+            parser.add_argument("-f", "--exp_file", default=config_path, type=str, help="please input your experiment description file")
+            parser.add_argument("-c", "--ckpt", default="./src/best_ckpt.pth", type=str, help="ckpt for eval")
+            parser.add_argument("--device", default="cpu", type=str, help="device to run our model, can either be cpu or gpu")
+            parser.add_argument("--path", default=temp_file_input_path, help="path to images or video")
+            parser.add_argument("--save_result", action="store_true", help="whether to save the inference result of image/video")
 
             logger.info(f"app.py : before make_parser")
             args = make_parser().parse_args()
+            logger.info(f"app.py : after make_parser")
             args.path = temp_file_input_path
 
             logger.info(f"app.py : config_path = {config_path}, args.demo = {args.demo}")
