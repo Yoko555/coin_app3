@@ -69,7 +69,7 @@ def predicts():
 #            parser = argparse.ArgumentParser("YOLOX Demo!")
 #            parser.add_argument("demo", default="image", help="demo type, eg. image, video and webcam")
 #            parser.add_argument("-f", "--exp_file", default=config_path, type=str, help="please input your experiment description file")
-#            parser.add_argument("-c", "--ckpt", default="./src/best_ckpt.pth", type=str, help="ckpt for eval")
+#            parser.add_argument("-c", "--ckpt", default="../src/best_ckpt.pth", type=str, help="ckpt for eval")
 #            parser.add_argument("--device", default="cpu", type=str, help="device to run our model, can either be cpu or gpu")
 #            parser.add_argument("--path", default=temp_file_input_path, help="path to images or video")
 #            parser.add_argument("--save_result", action="store_true", help="whether to save the inference result of image/video")
@@ -83,7 +83,8 @@ def predicts():
 
             args.demo = "image"
             args.experiment_name = config_path
-            args.ckpt = "./YOLOX_outputs/best_ckpt.pth"
+#             args.ckpt = "./YOLOX_outputs/best_ckpt.pth"
+            args.ckpt = "../YOLOX_outputs/best_ckpt.pth"
             args.device = "cpu"
             args.path = temp_file_input_path
             args.save_result = True
