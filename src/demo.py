@@ -212,7 +212,9 @@ def image_demo(predictor, path, current_time, save_result):
     for image_name in files:
         logger.info("demo.py image_demo image_name {}".format(image_name))
         outputs, img_info = predictor.inference(image_name)
+        logger.info("demo.py image_demo after predictor.inference")
         result_image = predictor.visual(outputs[0], img_info, predictor.confthre)
+        logger.info("demo.py image_demo after predictor.visual")
         #logger.info(f"demo.py : result_image = {result_image}")
 
 #####
@@ -226,6 +228,7 @@ def image_demo(predictor, path, current_time, save_result):
                 # クラスIDごとにカウントを増やす
                 class_counts[class_id] = class_counts.get(class_id, 0) + 1
 
+        logger.info("demo.py image_demo after predictor.visual")
         AMOUNT_LIST = [item.replace("JPY","") for item in COCO_CLASSES]
 
         # クラスごとのカウントを表示
@@ -253,9 +256,9 @@ def image_demo(predictor, path, current_time, save_result):
 #            save_file_name = os.path.join(save_folder, os.path.basename(image_name))
 #            logger.info("Saving detection result in {}".format(save_file_name))
 #            cv2.imwrite(save_file_name, result_image)
-#        ch = cv2.waitKey(0)
-#        if ch == 27 or ch == ord("q") or ch == ord("Q"):
-#            break
+        ch = cv2.waitKey(0)
+        if ch == 27 or ch == ord("q") or ch == ord("Q"):
+            break
     
 #    logger.info("image_demo save_file_name : {}".format(save_file_name))
 #    return total_amount, save_file_name

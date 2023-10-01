@@ -81,10 +81,15 @@ def predicts():
             # 空の args を作成
             args = make_empty_parser()
 
-            args.demo = "image"
-            args.experiment_name = config_path
-#             args.ckpt = "./YOLOX_outputs/best_ckpt.pth"
-            args.ckpt = "../YOLOX_outputs/best_ckpt.pth"
+            # 引数の設定
+            args.demo = "image"                     # 画像のみ
+            args.experiment_name = config_path      #設定ファイル
+
+            # Local で実行する場合はこちら            
+#            args.ckpt = "./YOLOX_outputs/best_ckpt.pth"   #重みづけ定義ファイル
+            # render にDeployする場合はこちら
+            args.ckpt = "../YOLOX_outputs/best_ckpt.pth"    #重みづけ定義ファイル
+
             args.device = "cpu"
             args.path = temp_file_input_path
             args.save_result = True
