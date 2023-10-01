@@ -109,7 +109,7 @@ class Exp(BaseExp):
         self.nmsthre = 0.65
 
     def get_model(self):
-        from yolox.models import YOLOX, YOLOPAFPN, YOLOXHead
+        from yolox import YOLOX, YOLOPAFPN, YOLOXHead
 
         def init_yolo(M):
             for m in M.modules():
@@ -282,7 +282,7 @@ class Exp(BaseExp):
         return self.optimizer
 
     def get_lr_scheduler(self, lr, iters_per_epoch):
-        from yolox.utils import LRScheduler
+        from lr_scheduler import LRScheduler
 
         scheduler = LRScheduler(
             self.scheduler,
