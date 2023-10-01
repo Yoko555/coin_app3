@@ -72,6 +72,7 @@ def predicts():
 #            parser.add_argument("--path", default=temp_file_input_path, help="path to images or video")
 #            parser.add_argument("--save_result", action="store_true", help="whether to save the inference result of image/video")
 
+            logger.info(f"app.py : before make_parser")
             args = make_parser().parse_args()
             args.path = temp_file_input_path
 
