@@ -295,7 +295,7 @@ def main(exp, args):
 
     file_name = os.path.join(exp.output_dir, args.experiment_name)
     logger.info(f"demo main exp.output_dir: {exp.output_dir}")
-    logger.info(f"demo main args.experiment_name): {args.experiment_name)}")
+    logger.info(f"demo main args.experiment_name: {args.experiment_name}")
     os.makedirs(file_name, exist_ok=True)
 
     vis_folder = None
