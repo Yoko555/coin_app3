@@ -16,7 +16,8 @@ class Exp(MyExp):
         self.width = 0.50
         self.exp_name = os.path.split(os.path.realpath(__file__))[1].split(".")[0]
 
-        self.data_dir = "C:/Users/mi_yo/OneDrive/デスクトップ/YOLOX/datasets/Coin"
+#        self.data_dir = "C:/Users/mi_yo/OneDrive/デスクトップ/YOLOX/datasets/Coin"
+        self.data_dir = "./src"
         # name of annotation file for training
         self.train_ann = "train.json"
         # name of annotation file for evaluation
