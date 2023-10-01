@@ -20,6 +20,9 @@ import tempfile
 
 IMAGE_EXT = [".jpg", ".jpeg", ".webp", ".bmp", ".png"]
 
+def make_empty_parser():
+    return argparse.ArgumentParser()
+
 
 def make_parser():
     logger.info(f"demo.py : IN make_parser 1")
@@ -197,7 +200,8 @@ class Predictor(object):
         return vis_res
 
 
-def image_demo(predictor, vis_folder, path, current_time, save_result):
+#def image_demo(predictor, vis_folder, path, current_time, save_result):
+def image_demo(predictor, path, current_time, save_result):
     logger.info("image_demo save_result1 : {}".format(save_result))
     logger.info(f"demo.py : path = {path}")
     if os.path.isdir(path):
@@ -300,14 +304,14 @@ def main(exp, args):
     file_name = os.path.join(exp.output_dir, args.experiment_name)
     logger.info(f"demo main exp.output_dir: {exp.output_dir}")
     logger.info(f"demo main args.experiment_name: {args.experiment_name}")
-    os.makedirs(file_name, exist_ok=True)
+#    os.makedirs(file_name, exist_ok=True)
 
-    vis_folder = None
+#    vis_folder = None
     logger.info(f"demo main args.save_result: {args.save_result}")
-    if args.save_result:
-        vis_folder = os.path.join(file_name, "vis_res")
-        os.makedirs(vis_folder, exist_ok=True)
-        logger.info(f"vis_folder: {vis_folder}")
+#    if args.save_result:
+#        vis_folder = os.path.join(file_name, "vis_res")
+#        os.makedirs(vis_folder, exist_ok=True)
+#        logger.info(f"vis_folder: {vis_folder}")
 
     if args.trt:
 #        args.device = "gpu"
@@ -367,9 +371,10 @@ def main(exp, args):
     if args.demo == "image":
 
         logger.info(f"args.save_result2 : img = {args.save_result}")
-        total_amount = image_demo(predictor, vis_folder, args.path, current_time, args.save_result)
-    elif args.demo == "video" or args.demo == "webcam":
-        total_amount = imageflow_demo(predictor, vis_folder, current_time, args)
+#        total_amount = image_demo(predictor, vis_folder, args.path, current_time, args.save_result)
+        total_amount = image_demo(predictor,  args.path, current_time, args.save_result)
+#    elif args.demo == "video" or args.demo == "webcam":
+#        total_amount = imageflow_demo(predictor, vis_folder, current_time, args)
     return total_amount
 
 if __name__ == "__main__":

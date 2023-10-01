@@ -4,6 +4,7 @@
 from demo import Predictor # demo.py からPredictorの定義を読み込み
 from demo import main # demo.py からmainを読み込み
 from demo import make_parser # demo.py からmake_parserを読み込み
+from demo import make_empty_parser # demo.py からmake_empty_parserを読み込み
 
 import argparse
 
@@ -63,19 +64,36 @@ def predicts():
             base64_str = base64.b64encode(buf.getvalue()).decode('utf-8')
             #　HTML 側の src の記述に合わせるために付帯情報付与する
             base64_data = 'data:image/png;base64,{}'.format(base64_str)
-                        
-            parser = argparse.ArgumentParser("YOLOX Demo!")
-            parser.add_argument("demo", default="image", help="demo type, eg. image, video and webcam")
-            parser.add_argument("-f", "--exp_file", default=config_path, type=str, help="please input your experiment description file")
-            parser.add_argument("-c", "--ckpt", default="./src/best_ckpt.pth", type=str, help="ckpt for eval")
-            parser.add_argument("--device", default="cpu", type=str, help="device to run our model, can either be cpu or gpu")
-            parser.add_argument("--path", default=temp_file_input_path, help="path to images or video")
-            parser.add_argument("--save_result", action="store_true", help="whether to save the inference result of image/video")
 
-            logger.info(f"app.py : before make_parser")
-            args = make_parser().parse_args()
-            logger.info(f"app.py : after make_parser")
+            #引数をコマンドラインから取得している？                        
+#            parser = argparse.ArgumentParser("YOLOX Demo!")
+#            parser.add_argument("demo", default="image", help="demo type, eg. image, video and webcam")
+#            parser.add_argument("-f", "--exp_file", default=config_path, type=str, help="please input your experiment description file")
+#            parser.add_argument("-c", "--ckpt", default="./src/best_ckpt.pth", type=str, help="ckpt for eval")
+#            parser.add_argument("--device", default="cpu", type=str, help="device to run our model, can either be cpu or gpu")
+#            parser.add_argument("--path", default=temp_file_input_path, help="path to images or video")
+#            parser.add_argument("--save_result", action="store_true", help="whether to save the inference result of image/video")
+
+#            logger.info(f"app.py : before make_parser")
+#            args = make_parser().parse_args()
+#            logger.info(f"app.py : after make_parser")
+
+            # 空の args を作成
+            args = make_empty_parser()
+
+            args.demo = "image"
+            args.experiment_name = config_path
+            args.ckpt = "./YOLOX_outputs/best_ckpt.pth"
+            args.device = "cpu"
             args.path = temp_file_input_path
+            args.save_result = True
+            args.conf = 0.3
+            args.nms = 0.3
+            args.tsize = None
+            args.fp16 = False
+            args.legacy = False
+            args.fuse = False
+            args.trt = False
 
             logger.info(f"app.py : config_path = {config_path}, args.demo = {args.demo}")
             logger.info(f"args.--path = {args.path}")            
