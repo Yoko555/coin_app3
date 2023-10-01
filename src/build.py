@@ -16,6 +16,7 @@ def get_exp_by_file(exp_file):
         exp = current_exp.Exp()
         logger.info(f"build.py : exp = {exp}")
     except Exception:
+        logger.info(f"build.py 2 : exp_file = {exp_file}")
         raise ImportError("{} doesn't contains class named 'Exp'".format(exp_file))
     return exp
 
