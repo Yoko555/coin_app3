@@ -22,10 +22,13 @@ IMAGE_EXT = [".jpg", ".jpeg", ".webp", ".bmp", ".png"]
 
 
 def make_parser():
+    logger.info(f"demo.py : IN make_parser 1")
     parser = argparse.ArgumentParser("YOLOX Demo!")
+    logger.info(f"demo.py : IN make_parser 2")
     parser.add_argument(
         "demo", default="image", nargs="?", help="demo type, eg. image, video and webcam"
     )
+    logger.info(f"demo.py : IN make_parser 3")
     parser.add_argument("-expn", "--experiment-name", type=str, default=None)
     parser.add_argument("-n", "--name", type=str, default=None, help="model name")
 
@@ -86,6 +89,7 @@ def make_parser():
         action="store_true",
         help="Using TensorRT model for testing.",
     )
+    logger.info(f"demo.py : IN make_parser 4")
     return parser
 
 
