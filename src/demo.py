@@ -171,9 +171,12 @@ class Predictor(object):
         logger.info(f"demo.py : set img")
         with torch.no_grad():
             t0 = time.time()
+            logger.info(f"demo.py : before model")
             outputs = self.model(img)
+            logger.info(f"demo.py : after model")
             if self.decoder is not None:
                 outputs = self.decoder(outputs, dtype=outputs.type())
+            logger.info(f"demo.py : before post process")
             outputs = postprocess(
                 outputs, self.num_classes, self.confthre,
                 self.nmsthre, class_agnostic=True
