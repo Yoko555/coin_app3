@@ -3,7 +3,7 @@
 
 from demo import Predictor # demo.py からPredictorの定義を読み込み
 from demo import main # demo.py からmainを読み込み
-from demo import make_parser # demo.py からmake_parserを読み込み
+#from demo import make_parser # demo.py からmake_parserを読み込み
 from demo import make_empty_parser # demo.py からmake_empty_parserを読み込み
 
 import argparse
