@@ -23,79 +23,6 @@ IMAGE_EXT = [".jpg", ".jpeg", ".webp", ".bmp", ".png"]
 def make_empty_parser():
     return argparse.ArgumentParser()
 
-
-#def make_parser():
-#    logger.info(f"demo.py : IN make_parser 1")
-#    parser = argparse.ArgumentParser("YOLOX Demo!")
-#    logger.info(f"demo.py : IN make_parser 2")
-#    parser.add_argument(
-#        "demo", default="image", nargs="?", help="demo type, eg. image, video and webcam"
-#    )
-#    logger.info(f"demo.py : IN make_parser 3")
-#    parser.add_argument("-expn", "--experiment-name", type=str, default=None)
-#    parser.add_argument("-n", "--name", type=str, default=None, help="model name")
-#
-#    parser.add_argument(
-#        "--path", default="./datafolder/saved_image.jpg", help="path to images or video"
-#    )
-#    parser.add_argument("--camid", type=int, default=0, help="webcam demo camera id")
-#    parser.add_argument(
-#        "--save_result",
-#        default=True,
-#        action="store_true",
-#        help="whether to save the inference result of image/video",
-#    )
-#
-#    # exp file
-#    parser.add_argument(
-#        "-f",
-#        "--exp_file",
-#        default=None,
-#        type=str,
-#        help="please input your experiment description file",
-#    )
-#    parser.add_argument("-c", "--ckpt", default=None, type=str, help="ckpt for eval")
-#    parser.add_argument(
-#        "--device",
-#        default="cpu",
-#        type=str,
-#        help="device to run our model, can either be cpu or gpu",
-#    )
-#    parser.add_argument("--conf", default=0.3, type=float, help="test conf")
-#    parser.add_argument("--nms", default=0.3, type=float, help="test nms threshold")
-#    parser.add_argument("--tsize", default=None, type=int, help="test img size")
-#    parser.add_argument(
-#        "--fp16",
-#        dest="fp16",
-#        default=False,
-#        action="store_true",
-#        help="Adopting mix precision evaluating.",
-#    )
-#    parser.add_argument(
-#        "--legacy",
-#        dest="legacy",
-#        default=False,
-#        action="store_true",
-#        help="To be compatible with older versions",
-#    )
-#    parser.add_argument(
-#        "--fuse",
-#        dest="fuse",
-#        default=False,
-#        action="store_true",
-#        help="Fuse conv and bn for testing.",
-#    )
-#    parser.add_argument(
-#        "--trt",
-#        dest="trt",
-#        default=False,
-#        action="store_true",
-#        help="Using TensorRT model for testing.",
-#    )
-#    logger.info(f"demo.py : IN make_parser 4")
-#    return parser
-
-
 def get_image_list(path):
     image_names = []
     for maindir, subdir, file_name_list in os.walk(path):
@@ -208,7 +135,6 @@ class Predictor(object):
         return vis_res
 
 
-#def image_demo(predictor, vis_folder, path, current_time, save_result):
 def image_demo(predictor, path, current_time, save_result):
     logger.info("image_demo save_result1 : {}".format(save_result))
     logger.info(f"demo.py : path = {path}")
@@ -221,7 +147,7 @@ def image_demo(predictor, path, current_time, save_result):
         logger.info("demo.py image_demo image_name {}".format(image_name))
         outputs, img_info = predictor.inference(image_name)
         logger.info("demo.py image_demo after predictor.inference")
-        result_image = predictor.visual(outputs[0], img_infake_parsero, predictor.confthre)
+        result_image = predictor.visual(outputs[0], img_info, predictor.confthre)
         logger.info("demo.py image_demo after predictor.visual")
         #logger.info(f"demo.py : result_image = {result_image}")
 
@@ -249,27 +175,15 @@ def image_demo(predictor, path, current_time, save_result):
 #####
 
         if save_result:
-#            save_folder = vis_folder
-#            save_folder = os.path.join(
-#                vis_folder, time.strftime("%Y_%m_%d_%H_%M_%S", current_time)
-#            )
-#            logger.info(f"save_folder: {save_folder}")
-#            os.makedirs(save_folder, exist_ok=True)
             with tempfile.NamedTemporaryFile(delete=False,suffix=".png") as temp_file_result:
                 cv2.imwrite(temp_file_result.name, result_image) 
-#                outputs.save(temp_file_result)
                 temp_file_result_path = temp_file_result.name
             logger.info(f"temp_file_result_path: {temp_file_result_path}")
 
-#            save_file_name = os.path.join(save_folder, os.path.basename(image_name))
-#            logger.info("Saving detection result in {}".format(save_file_name))
-#            cv2.imwrite(save_file_name, result_image)
         ch = cv2.waitKey(0)
         if ch == 27 or ch == ord("q") or ch == ord("Q"):
             break
     
-#    logger.info("image_demo save_file_name : {}".format(save_file_name))
-#    return total_amount, save_file_name
     return total_amount, temp_file_result_path
 
 def main(exp, args):
@@ -279,17 +193,9 @@ def main(exp, args):
     file_name = os.path.join(exp.output_dir, args.experiment_name)
     logger.info(f"demo main exp.output_dir: {exp.output_dir}")
     logger.info(f"demo main args.experiment_name: {args.experiment_name}")
-#    os.makedirs(file_name, exist_ok=True)
-
-#    vis_folder = None
     logger.info(f"demo main args.save_result: {args.save_result}")
-#    if args.save_result:
-#        vis_folder = os.path.join(file_name, "vis_res")
-#        os.makedirs(vis_folder, exist_ok=True)
-#        logger.info(f"vis_folder: {vis_folder}")
 
     if args.trt:
-#        args.device = "gpu"
         args.device = "cpu"
 
     logger.info("Args: {}".format(args))
@@ -344,14 +250,7 @@ def main(exp, args):
     )
     current_time = time.localtime()
     if args.demo == "image":
-
         logger.info(f"args.save_result2 : img = {args.save_result}")
-#        total_amount = image_demo(predictor, vis_folder, args.path, current_time, args.save_result)
         total_amount = image_demo(predictor,  args.path, current_time, args.save_result)
     return total_amount
 
-#if __name__ == "__main__":
-#    args = make_parser().parse_args()
-#    exp = get_exp(args.exp_file, args.name)
-#
-#    main(exp, args)
